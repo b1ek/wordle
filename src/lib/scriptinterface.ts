@@ -49,6 +49,7 @@ export class ScriptInterface {
     readonly gameState: GameState           = new GameState();
     readonly scriptsAllowed: {(): boolean}  = areScriptsAllowed;
     readonly lib: WordleLibrary             = new WordleLibrary();
+    readonly addScriptAllowedHook           = addScriptAllowedHook;
 }
 globalThis.ScriptInterface = new ScriptInterface();
 const si = globalThis.ScriptInterface;
