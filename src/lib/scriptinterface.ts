@@ -1,10 +1,23 @@
 import { random } from "./random";
 import { encode, decode } from "./cipher";
 
+let allowHooks: {(): void}[] = [];
+
+export function addScriptAllowedHook(hook: {(): void}) {
+    allowHooks.push(hook)
+}
+
 let scriptsAllowed = false;
 
 export function allowScripts() {
+    if (scriptsAllowed) return;
+
+    console.warn('Scripts are now allowed');
+
     scriptsAllowed = true;
+    for (const hook of allowHooks) {
+        hook();
+    }
 }
 
 export function areScriptsAllowed() {

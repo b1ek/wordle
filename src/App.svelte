@@ -1,8 +1,15 @@
 <script lang="ts">
     import Game from './Game.svelte';
+    import Settings from './Settings.svelte';
     import Shield from './icon/Shield.svelte';
 
-    import { areScriptsAllowed } from './lib/scriptinterface';
+    import { areScriptsAllowed, addScriptAllowedHook } from './lib/scriptinterface';
+
+    let currentInterface: 'game' | 'settings' = 'game';
+    let scriptEnabled = areScriptsAllowed();
+    addScriptAllowedHook(() => {
+        scriptEnabled = true;
+    })
 </script>
 
 <main>
@@ -18,6 +25,16 @@
         <a href='https://git.blek.codes/blek/wordle'>
             Source Code
         </a>
+        <a href='javascript:' on:click={() => {currentInterface = currentInterface == 'settings' ? 'game' : 'settings'}}>
+            {currentInterface == 'settings' ? 'Go back' : 'Settings'}
+        </a>
     </p>
-    <Game />
+
+    {#if currentInterface == 'game'}
+        <Game />
+    {/if}
+
+    {#if currentInterface == 'settings'}
+        <Settings />
+    {/if}
 </main>
