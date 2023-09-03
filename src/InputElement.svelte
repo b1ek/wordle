@@ -1,0 +1,44 @@
+<script lang='ts'>
+    export let letter = ' ';
+    export let status: 'unfit' | 'yellow' | 'green' | 'input' | 'standby' = 'input';
+</script>
+
+<span class={'wordle-input-element ' + `input-status-${status}`}>
+    <span style='transform:translateY(-25%);display:block'>
+        {letter}
+    </span>
+</span>
+
+<style>
+    .wordle-input-element {
+        line-height: 84px;
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        margin: 3px;
+        border: 2px solid #3d4054;
+        border-radius: 4px;
+        user-select: none;
+        box-shadow: 0 0 1px #00000020;
+        background: #3d4054;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 20pt;
+        transition: 350ms ease;
+    }
+    .input-status-input {
+        background: #8284a220;
+    }
+    .input-status-standby {
+        background: transparent;
+    }
+    .input-status-yellow {
+        background: #f3c237;
+        border-color: #f3c237;
+    }
+    .input-status-green {
+        background: #76b676;
+        border-color: #76b676;
+        /* color: #232323; */
+    }
+</style>
