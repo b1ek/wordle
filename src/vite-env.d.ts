@@ -1,3 +1,4 @@
 /// <reference types="svelte" />
 /// <reference types="vite/client" />
-const TARGETS: string
+const TARGETS: string;
+declare module 'qr-creator';

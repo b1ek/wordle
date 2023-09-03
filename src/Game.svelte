@@ -10,6 +10,8 @@
     import { isIn, loadDict } from "./dictionary";
     import { onMount } from "svelte";
     import Keyboard from "./Keyboard.svelte";
+    import GameCreator from "./GameCreator.svelte";
+    import { decode } from "./lib/cipher";
 
     let targets = getForNWord(5);
 
@@ -23,12 +25,22 @@
 
     let loading = true;
     let not_a_word = false;
+    let game_creator = false;
 
     let green_letters: string[] = [];
     let yellow_letters: string[] = [];
     let unfit_letters: string[] = [];
 
-    console.log(word);
+    (
+        function() {
+            const urlprops = new URLSearchParams(window.location.search);
+            const challenge = urlprops.get('challenge');
+            if (challenge !== null) {
+                word = decode(atob(decodeURIComponent(challenge)));
+                console.log(word)
+            }
+        }
+    )()
 
     onMount(async () => {
         await loadDict();
@@ -130,6 +142,8 @@
     }
 </script>
 
+<GameCreator bind:show={game_creator} />
+
 {#if not_a_word}
     <Modal show animate={false}>
         <ModalTitle>
@@ -172,6 +186,10 @@
 
 <button on:click={() => {endgame = true}}>
     Give up
+</button>
+
+<button on:click={() => {game_creator = true}}>
+    Create a game
 </button>
 
 <p style='line-height:0;margin-top:48px'>

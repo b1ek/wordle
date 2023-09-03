@@ -11,4 +11,14 @@ export function getForNWord(len: number) {
     return out
 }
 
+export function getRandom(len: number | null = null) {
+    const dataset = len ? getForNWord(len) : targets;
+    for (const target of dataset) {
+        if (random(0, Math.floor(dataset.length * 0.5)) == 0) {
+            return target;
+        }
+    }
+    return dataset[0];
+}
+
 export default targets

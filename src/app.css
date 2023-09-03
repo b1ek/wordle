@@ -43,6 +43,18 @@ button:active {
   background: #161616;
 }
 
+input[type=text] {
+  background: #181818;
+  border: 1px solid #343434;
+  border-radius: 6px;
+  margin: 0 4px;
+  padding: 4px 6px;
+  outline: none;
+  min-width: 80px;
+  width: 80px;
+  max-width: 100%;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
