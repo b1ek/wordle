@@ -7,6 +7,7 @@
 
     let currentInterface: 'game' | 'settings' = 'game';
     let scriptEnabled = areScriptsAllowed();
+
     addScriptAllowedHook(() => {
         scriptEnabled = true;
     })
@@ -14,7 +15,7 @@
 
 <main>
     <h1>blek! Wordle</h1>
-    {#if areScriptsAllowed()}
+    {#if scriptEnabled}
         <p style="color:coral">
             <Shield height='13pt' />
             Scripts are allowed. The game may not be fair-played
