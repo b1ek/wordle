@@ -6,6 +6,7 @@ let scriptsAllowed = false;
 export function allowScripts() {
     scriptsAllowed = true;
 }
+allowScripts();
 
 export class GameState {
     word?:              string;
@@ -18,6 +19,8 @@ export class GameState {
     green_letters?:     string[];
     yellow_letters?:    string[];
     unfit_letters?:     string[];
+    set_current_word?:  {(word: string): void};
+    submit_guess?:      {(): void};
 }
 
 export class WordleLibrary {

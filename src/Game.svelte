@@ -16,7 +16,7 @@
 
     let targets = getForNWord(5);
 
-    let word = targets[random(0, targets.length)];
+    let word: string = targets[random(0, targets.length)];
     let guesses = 6;
     let guessed: string[][] = [];
     let current_guess = 0;
@@ -27,6 +27,26 @@
     let green_letters: string[] = [];
     let yellow_letters: string[] = [];
     let unfit_letters: string[] = [];
+    
+    for (let i = 0; i != guesses; i++) {
+        guessed.push(new Array(word.length).fill(''));
+    }
+
+    globalThis.ScriptInterface.gameState.set_current_word = word2 => {
+        if (!globalThis.ScriptInterface.scriptsAllowed())
+            throw new Error('Scripts are not allowed');
+
+        if (word2.length != word.length) {
+            throw new Error('Guess word must be the same length as the target word!');
+        }
+        guessed[current_guess] = word2.split('');
+    }
+
+    globalThis.ScriptInterface.gameState.submit_guess = () => {
+        if (!globalThis.ScriptInterface.scriptsAllowed())
+            throw new Error('Scripts are not allowed');
+        submitGuess();
+    }
     
     setTimeout(() => {
         setGameState({
@@ -53,6 +73,54 @@
         endgame = state.endgame ?? endgame;
 
         updateScriptInterface(state);
+    }
+
+    function submitGuess() {
+        if (word_position != word.length) return;
+        if (!isIn(current_word())) {
+            not_a_word = true;
+            setTimeout(() => {not_a_word = false}, 1000);
+            return
+        }
+
+        if (current_guess + 1 == guesses) {
+            endgame = true;
+            wins = is_win();
+            green_letters = word.split('');
+            current_guess++;
+            return;
+        }
+        if (is_win()) {
+            endgame = true;
+            wins = true;
+            green_letters = word.split('');
+            current_guess++;
+            return
+        }
+
+        let c_word = current_word();
+        for (const ii in c_word.split('')) {
+            const i = parseInt(ii);
+            const letter = c_word[i];
+
+            if (word.indexOf(letter) !== -1) {
+                if (word[i] == letter) {
+                    if (green_letters.indexOf(letter) === -1)
+                        green_letters.push(letter);
+                } else {
+                    if (yellow_letters.indexOf(letter) === -1)
+                        yellow_letters.push(letter);
+                }
+            } else {
+                unfit_letters.push(letter);
+            }
+            green_letters = green_letters;
+            yellow_letters = yellow_letters;
+            unfit_letters = unfit_letters;
+        }
+
+        word_position = 0;
+        current_guess++;
     }
 
     let loading = true;
@@ -82,10 +150,6 @@
     function is_win() {
         return current_word() == word;
     }
-    
-    for (let i = 0; i != guesses; i++) {
-        guessed.push(new Array(word.length).fill(''));
-    }
 
     document.onkeydown = e => {
         if (endgame) return;
@@ -97,51 +161,7 @@
             word_position -= 1;
         }
         if (e.key == 'Enter') {
-            if (word_position != word.length) return;
-            if (!isIn(current_word())) {
-                not_a_word = true;
-                setTimeout(() => {not_a_word = false}, 1000);
-                return
-            }
-
-            if (current_guess + 1 == guesses) {
-                endgame = true;
-                wins = is_win();
-                green_letters = word.split('');
-                current_guess++;
-                return;
-            }
-            if (is_win()) {
-                endgame = true;
-                wins = true;
-                green_letters = word.split('');
-                current_guess++;
-                return
-            }
-
-            let c_word = current_word();
-            for (const ii in c_word.split('')) {
-                const i = parseInt(ii);
-                const letter = c_word[i];
-
-                if (word.indexOf(letter) !== -1) {
-                    if (word[i] == letter) {
-                        if (green_letters.indexOf(letter) === -1)
-                            green_letters.push(letter);
-                    } else {
-                        if (yellow_letters.indexOf(letter) === -1)
-                            yellow_letters.push(letter);
-                    }
-                } else {
-                    unfit_letters.push(letter);
-                }
-                green_letters = green_letters;
-                yellow_letters = yellow_letters;
-                unfit_letters = unfit_letters;
-            }
-
-            word_position = 0;
-            current_guess++;
+            submitGuess();
         }
         if (e.key.length == 1) {
             if (e.ctrlKey || e.shiftKey || e.altKey) return;
