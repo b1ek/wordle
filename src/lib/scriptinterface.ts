@@ -6,7 +6,10 @@ let scriptsAllowed = false;
 export function allowScripts() {
     scriptsAllowed = true;
 }
-allowScripts();
+
+export function areScriptsAllowed() {
+    return scriptsAllowed == true;
+}
 
 export class GameState {
     word?:              string;
@@ -31,7 +34,7 @@ export class WordleLibrary {
 
 export class ScriptInterface {
     readonly gameState: GameState           = new GameState();
-    readonly scriptsAllowed: {(): boolean}           = () => scriptsAllowed;
+    readonly scriptsAllowed: {(): boolean}  = areScriptsAllowed;
     readonly lib: WordleLibrary             = new WordleLibrary();
 }
 globalThis.ScriptInterface = new ScriptInterface();
