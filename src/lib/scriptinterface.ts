@@ -31,7 +31,7 @@ export class WordleLibrary {
 
 export class ScriptInterface {
     readonly gameState: GameState           = new GameState();
-    scriptsAllowed: {(): boolean}           = () => scriptsAllowed;
+    readonly scriptsAllowed: {(): boolean}           = () => scriptsAllowed;
     readonly lib: WordleLibrary             = new WordleLibrary();
 }
 globalThis.ScriptInterface = new ScriptInterface();
