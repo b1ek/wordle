@@ -23,6 +23,10 @@
     let word_position = 0;
     let wins = false;
     let endgame = false;
+
+    let green_letters: string[] = [];
+    let yellow_letters: string[] = [];
+    let unfit_letters: string[] = [];
     
     setTimeout(() => {
         setGameState({
@@ -32,7 +36,10 @@
             current_guess,
             word_position,
             wins,
-            endgame
+            endgame,
+            green_letters,
+            yellow_letters,
+            unfit_letters
         });
     }, 500)
 
@@ -51,10 +58,6 @@
     let loading = true;
     let not_a_word = false;
     let game_creator = false;
-
-    let green_letters: string[] = [];
-    let yellow_letters: string[] = [];
-    let unfit_letters: string[] = [];
 
     (
         function() {

@@ -8,13 +8,16 @@ export function allowScripts() {
 }
 
 export class GameState {
-    word?:          string;
-    guesses?:       number;
-    guessed?:       string[][];
-    current_guess?: number;
-    word_position?: number;
-    wins?:          boolean;
-    endgame?:       boolean;
+    word?:              string;
+    guesses?:           number;
+    guessed?:           string[][];
+    current_guess?:     number;
+    word_position?:     number;
+    wins?:              boolean;
+    endgame?:           boolean;
+    green_letters?:     string[];
+    yellow_letters?:    string[];
+    unfit_letters?:     string[];
 }
 
 export class WordleLibrary {
