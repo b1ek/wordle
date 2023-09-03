@@ -40,6 +40,7 @@
             throw new Error('Guess word must be the same length as the target word!');
         }
         guessed[current_guess] = word2.split('');
+        word_position = word.length;
     }
 
     globalThis.ScriptInterface.gameState.submit_guess = () => {
@@ -47,8 +48,8 @@
             throw new Error('Scripts are not allowed');
         submitGuess();
     }
-    
-    setTimeout(() => {
+
+    function updateState() {
         setGameState({
             word,
             guesses,
@@ -61,7 +62,8 @@
             yellow_letters,
             unfit_letters
         });
-    }, 500)
+    }
+    setTimeout(updateState, 500);
 
     function setGameState(state: GameState) {
         word = state.word ?? word;
@@ -76,11 +78,11 @@
     }
 
     function submitGuess() {
-        if (word_position != word.length) return;
+        if (word_position != word.length) return updateState();
         if (!isIn(current_word())) {
             not_a_word = true;
             setTimeout(() => {not_a_word = false}, 1000);
-            return
+            return updateState();
         }
 
         if (current_guess + 1 == guesses) {
@@ -88,14 +90,14 @@
             wins = is_win();
             green_letters = word.split('');
             current_guess++;
-            return;
+            return updateState();
         }
         if (is_win()) {
             endgame = true;
             wins = true;
             green_letters = word.split('');
             current_guess++;
-            return
+            return updateState();
         }
 
         let c_word = current_word();
@@ -121,6 +123,7 @@
 
         word_position = 0;
         current_guess++;
+        updateState();
     }
 
     let loading = true;
@@ -133,7 +136,7 @@
             const challenge = urlprops.get('challenge');
             if (challenge !== null) {
                 word = decode(atob(decodeURIComponent(challenge)));
-                console.log(word)
+                updateState();
             }
         }
     )()
@@ -141,6 +144,7 @@
     onMount(async () => {
         await loadDict();
         loading = false;
+        updateState();
     });
 
     function current_word() {
@@ -152,11 +156,11 @@
     }
 
     document.onkeydown = e => {
-        if (endgame) return;
-        if (not_a_word) return;
+        if (endgame) return updateState();
+        if (not_a_word) return updateState();
 
         if (e.key == 'Backspace') {
-            if (word_position == 0) return;
+            if (word_position == 0) return updateState();
             guessed[current_guess][word_position - 1] = '';
             word_position -= 1;
         }
@@ -164,12 +168,13 @@
             submitGuess();
         }
         if (e.key.length == 1) {
-            if (e.ctrlKey || e.shiftKey || e.altKey) return;
-            if (e.key.match(/[a-zA-Z]/i) === null) return;
-            if (word_position == word.length) return;
+            if (e.ctrlKey || e.shiftKey || e.altKey) return updateState();
+            if (e.key.match(/[a-zA-Z]/i) === null) return updateState();
+            if (word_position == word.length) return updateState();
             guessed[current_guess][word_position] = e.key;
             word_position += 1;
         }
+        updateState();
     }
 
     function reset_game() {
@@ -187,6 +192,7 @@
         green_letters = [];
         yellow_letters = [];
         unfit_letters = [];
+        updateState();
     }
 </script>
 
