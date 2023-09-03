@@ -17,6 +17,3 @@ export function decode(ciphertext: string) {
     }
     return out;
 }
-
-globalThis.encode = encode;
-globalThis.decode = decode;
