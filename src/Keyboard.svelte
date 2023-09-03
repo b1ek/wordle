@@ -55,6 +55,16 @@
         width: 600px;
         height: 56px;
     }
+    @media (max-width: 667px) {
+        .openwordle-keyboard .openwordle-keyboard-line {
+            width: 96vw;
+            height: 40px;
+        }
+        .openwordle-keyboard .openwordle-keyboard-btn  {
+            font-size: 10pt;
+            padding: 0 4px;
+        }
+    }
     .kb-btn-unfit {
         background: #444454 !important;
     }

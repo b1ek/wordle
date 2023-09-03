@@ -2,7 +2,7 @@
     import Game from './Game.svelte'
 </script>
 
-<main style='width:fit-content;margin:0 auto;text-align:center'>
+<main>
     <h1>blek! Wordle</h1>
     <p>
         FOSS wordle game that runs in your browser!<br/>
