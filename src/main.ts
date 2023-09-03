@@ -1,4 +1,6 @@
 import './app.css'
+import './lib/scriptinterface';
+
 import App from './App.svelte'
 
 const app = new App({

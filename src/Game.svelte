@@ -12,6 +12,7 @@
     import Keyboard from "./Keyboard.svelte";
     import GameCreator from "./GameCreator.svelte";
     import { decode } from "./lib/cipher";
+    import { GameState, updateScriptInterface } from "./lib/scriptinterface";
 
     let targets = getForNWord(5);
 
@@ -22,6 +23,30 @@
     let word_position = 0;
     let wins = false;
     let endgame = false;
+    
+    setTimeout(() => {
+        setGameState({
+            word,
+            guesses,
+            guessed,
+            current_guess,
+            word_position,
+            wins,
+            endgame
+        });
+    }, 500)
+
+    function setGameState(state: GameState) {
+        word = state.word ?? word;
+        guesses = state.guesses ?? guesses;
+        guessed = state.guessed ?? guessed;
+        current_guess = state.current_guess ?? current_guess;
+        word_position = state.word_position ?? word_position;
+        wins = state.wins ?? wins;
+        endgame = state.endgame ?? endgame;
+
+        updateScriptInterface(state);
+    }
 
     let loading = true;
     let not_a_word = false;
