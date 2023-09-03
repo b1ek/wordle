@@ -1,7 +1,12 @@
+import targets from "./targets";
+
 let dict: string[] = [];
 let dict_loaded = false;
 
 export async function loadDict(onprogress?: {(data: { loaded: number, total: number }): void}) {
+
+    if (dict_loaded) return dict;
+
     const req = await fetch('/dictionary.csv', {
         cache: 'force-cache'
     });
@@ -24,6 +29,7 @@ export async function loadDict(onprogress?: {(data: { loaded: number, total: num
         }
     }))
     dict = data.split(',');
+    dict = [ ...targets, ...dict ];
     dict_loaded = true;
 }
 
