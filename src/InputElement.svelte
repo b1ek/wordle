@@ -26,6 +26,14 @@
         font-size: 20pt;
         transition: 350ms ease;
     }
+    @media (max-width: 667px) {
+        .wordle-input-element {
+            width: 38px;
+            height: 38px;
+            line-height: 74px;
+            font-size: 12pt;
+        }
+    }
     .input-status-input {
         background: #8284a220;
     }
