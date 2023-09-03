@@ -1,8 +1,11 @@
-# OpenWordle
-<p align="center">
+
+<h1>
+    blek! Wordle
     <img src="https://jenkins.blek.codes/job/bWordle/badge/icon?style=plastic"></img>
-</p>
-OpenWordle is a completely open source and lightweight wordle game with very minimal set of runtime dependencies
+</h1>
+blek! Wordle is a completely open source and lightweight wordle game with very minimal set of runtime dependencies
+
+<a href='https://wordle.blek.codes'>Play online</a>
 
 ## Features
 
