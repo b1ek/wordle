@@ -103,8 +103,8 @@
         .openwordle-keyboard .openwordle-keyboard-btn:hover {
             background: #d1d1d1;
         }
-        .kb-btn-unfit           { background: #d1d1d1 !important; }
-        .kb-btn-unfit:hover     { background: #dadada !important; }
+        .kb-btn-unfit           { background: #b1b1b1 !important; }
+        .kb-btn-unfit:hover     { background: #bababa !important; }
         .kb-btn-unfit:active    { background: #c1c1c1 !important; }
     }
     
