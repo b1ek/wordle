@@ -106,8 +106,6 @@
         .kb-btn-unfit           { background: #d1d1d1 !important; }
         .kb-btn-unfit:hover     { background: #dadada !important; }
         .kb-btn-unfit:active    { background: #c1c1c1 !important; }
-
-        .
     }
     
 </style>

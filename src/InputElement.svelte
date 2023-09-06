@@ -47,6 +47,25 @@
     .input-status-green {
         background: #76b676;
         border-color: #76b676;
-        /* color: #232323; */
+    }
+    @media (prefers-color-scheme: light) {
+        .wordle-input-element {
+            border-color: #919191;
+            color: white
+        }
+        .input-status-input {
+            background: #f1f6f6;
+            color: black;
+            border-color: #c1c1c1;
+        }
+        .input-status-standby {
+            background: #919191;
+        }
+        .input-status-unfit {
+            background: #b2b4c2;
+        }
+        .input-status-green, .input-status-yellow, .input-status-unfit {
+            border-color: #a1a1a1;
+        }
     }
 </style>
