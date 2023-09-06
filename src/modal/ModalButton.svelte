@@ -36,5 +36,7 @@
             background: #e1e1e1;
             border-color: #f1f1f1
         }
+        .openwordle-modal-button:hover { background: #dbdbdb }
+        .openwordle-modal-button:active { background: #d6d6d6 }
     }
 </style>
