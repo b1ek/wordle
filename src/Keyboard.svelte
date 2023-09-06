@@ -94,5 +94,20 @@
     .kb-btn-yellow:active {
         background: #b69656 !important;
     }
+
+
+    @media (prefers-color-scheme: light) {
+        .openwordle-keyboard .openwordle-keyboard-btn {
+            background: #e1e1e1;
+        }
+        .openwordle-keyboard .openwordle-keyboard-btn:hover {
+            background: #d1d1d1;
+        }
+        .kb-btn-unfit           { background: #d1d1d1 !important; }
+        .kb-btn-unfit:hover     { background: #dadada !important; }
+        .kb-btn-unfit:active    { background: #c1c1c1 !important; }
+
+        .
+    }
     
 </style>
