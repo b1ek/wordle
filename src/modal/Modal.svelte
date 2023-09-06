@@ -60,4 +60,15 @@
 
         animation: openwordle-modal-backdrop-fade-in 250ms ease;
     }
+
+    @media (prefers-color-scheme: light) {
+        .openwordle-modal-backdrop {
+            background: radial-gradient(#00000010 50%, #00000060);
+        }
+        .openwordle-modal {
+            background: #e1e1e1;
+            color: black;
+            border-color: #c0c0c0;
+        }
+    }
 </style>

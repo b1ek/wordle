@@ -30,4 +30,11 @@
     .openwordle-modal-button:active {
         background: #121212;
     }
+
+    @media (prefers-color-scheme: light) {
+        .openwordle-modal-button {
+            background: #e1e1e1;
+            border-color: #f1f1f1
+        }
+    }
 </style>
