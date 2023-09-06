@@ -36,9 +36,11 @@
     }
     .input-status-input {
         background: #8284a220;
+        border-color: #8284a220;
     }
     .input-status-standby {
         background: transparent;
+        border-color: transparent;
     }
     .input-status-yellow {
         background: #f3c237;
@@ -50,22 +52,19 @@
     }
     @media (prefers-color-scheme: light) {
         .wordle-input-element {
-            border-color: #919191;
             color: white
         }
         .input-status-input {
             background: #f1f6f6;
             color: black;
-            border-color: #c1c1c1;
+            border-color: #e6efef;
         }
         .input-status-standby {
             background: #919191;
         }
         .input-status-unfit {
             background: #b2b4c2;
-        }
-        .input-status-green, .input-status-yellow, .input-status-unfit {
-            border-color: #a1a1a1;
+            border-color: #b2b4c2 !important;
         }
     }
 </style>
