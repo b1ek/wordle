@@ -39,8 +39,8 @@
         border-color: #8284a220;
     }
     .input-status-standby {
-        background: transparent;
-        border-color: transparent;
+        background: #3d405420;
+        border-color: #3d405415;
     }
     .input-status-yellow {
         background: #f3c237;
