@@ -9,7 +9,16 @@ export async function bufferToBase64(buffer: BufferSource) {
     });
 
     return base64url.slice(base64url.indexOf(',') + 1);
-  }
+}
+
+export function base64ToArrayBuffer(base64: string) {
+    var binaryString = atob(base64);
+    var bytes = new Uint8Array(binaryString.length);
+    for (var i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
 
 export class AES256 {
     static async str2key(key: string): Promise<CryptoKey> {
@@ -56,8 +65,21 @@ export class V1 {
         }
 
         return {
-            data: await bufferToBase64(await AES256.encodeStr(scrambled, this.aes256secret))
+            data: await bufferToBase64(await AES256.encodeStr(scrambled, this.aes256secret)),
+            made_at: Date.now()
         }
+    }
+
+    static async decode(data: { data: string }): Promise<string> {
+        const encrypted = base64ToArrayBuffer(data.data);
+        const scrambled = await AES256.decodeToStr(encrypted, this.aes256secret);
+        let unscrambled = '';
+        for (let i = 0; i != scrambled.length; i++) {
+            if (i % 2 == 1) {
+                unscrambled += scrambled[i];
+            }
+        }
+        return unscrambled;
     }
 }
 
