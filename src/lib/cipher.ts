@@ -1,5 +1,9 @@
 import { random } from "./random";
 
+export async function sha256(data: string) {
+    return await bufferToBase64(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(data)));
+}
+
 export async function bufferToBase64(buffer: BufferSource) {
     const base64url: string = await new Promise(r => {
         const reader = new FileReader()
@@ -64,14 +68,14 @@ export class V1 {
             scrambled += String.fromCharCode(random(32, 128)) + letter;
         }
 
-        return {
-            data: await bufferToBase64(await AES256.encodeStr(scrambled, this.aes256secret)),
-            made_at: Date.now()
-        }
+        return [
+            (await sha256(Math.random().toString())).substring(0, 6),
+            await bufferToBase64(await AES256.encodeStr(scrambled, this.aes256secret))
+        ]
     }
 
-    static async decode(data: { data: string }): Promise<string> {
-        const encrypted = base64ToArrayBuffer(data.data);
+    static async decode(data: [string, string]): Promise<string> {
+        const encrypted = base64ToArrayBuffer(data[1]);
         const scrambled = await AES256.decodeToStr(encrypted, this.aes256secret);
         let unscrambled = '';
         for (let i = 0; i != scrambled.length; i++) {
