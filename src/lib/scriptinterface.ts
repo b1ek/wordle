@@ -1,5 +1,6 @@
 import { random } from "./random";
-import { encode, decode } from "./cipher";
+import { encode, decode, V1 } from "./cipher";
+import * as cipher from './cipher';
 
 let allowHooks: {(): void}[] = [];
 
@@ -43,6 +44,7 @@ export class WordleLibrary {
     readonly random = random;
     readonly encode = encode;
     readonly decode = decode;
+    readonly cipher = cipher;
 }
 
 export class ScriptInterface {
