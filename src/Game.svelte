@@ -11,7 +11,7 @@
     import { onMount } from "svelte";
     import Keyboard from "./Keyboard.svelte";
     import GameCreator from "./GameCreator.svelte";
-    import { decode } from "./lib/cipher";
+    import { V1 } from "./lib/cipher";
     import { GameState, updateScriptInterface } from "./lib/scriptinterface";
 
     let targets = getForNWord(5);
@@ -79,7 +79,7 @@
 
     function submitGuess() {
         if (word_position != word.length) return updateState();
-        if (!isIn(current_word())) {
+        if (!isIn(current_word()) && current_word() != word) {
             not_a_word = true;
             setTimeout(() => {not_a_word = false}, 1000);
             return updateState();
@@ -131,11 +131,17 @@
     let game_creator = false;
 
     (
-        function() {
+        async function() {
             const urlprops = new URLSearchParams(window.location.search);
             const challenge = urlprops.get('challenge');
             if (challenge !== null) {
-                word = decode(atob(decodeURIComponent(challenge)));
+                let data = atob(decodeURIComponent(challenge)).split(';');
+                if (data.length != 3) return;
+                // @ts-expect-error
+                data[0] = parseInt(data[0]);
+
+                // @ts-expect-error
+                word = await V1.decode(data);
                 updateState();
             }
         }
