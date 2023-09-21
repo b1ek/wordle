@@ -156,6 +156,7 @@
     }
 
     document.onkeydown = e => {
+        if (game_creator) return updateState();
         if (endgame) return updateState();
         if (not_a_word) return updateState();
 
