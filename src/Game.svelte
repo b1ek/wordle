@@ -27,10 +27,6 @@
     let green_letters: string[] = [];
     let yellow_letters: string[] = [];
     let unfit_letters: string[] = [];
-    
-    for (let i = 0; i != guesses; i++) {
-        guessed.push(new Array(word.length).fill(''));
-    }
 
     globalThis.ScriptInterface.gameState.set_current_word = word2 => {
         if (!globalThis.ScriptInterface.scriptsAllowed())
@@ -79,7 +75,11 @@
 
     function submitGuess() {
         if (word_position != word.length) return updateState();
-        if (!isIn(current_word()) && current_word() != word) {
+        if (
+            !isIn(current_word()) &&
+            current_word() != word &&
+            word.length > 3 && word.length < 11
+        ) {
             not_a_word = true;
             setTimeout(() => {not_a_word = false}, 1000);
             return updateState();
@@ -142,6 +142,12 @@
 
                 // @ts-expect-error
                 word = await V1.decode(data);
+
+                guessed = [];
+                for (let i = 0; i != guesses; i++) {
+                    guessed.push(new Array(word.length).fill(''));
+                }
+
                 updateState();
             }
         }
@@ -200,6 +206,10 @@
         yellow_letters = [];
         unfit_letters = [];
         updateState();
+    }
+    
+    for (let i = 0; i != guesses; i++) {
+        guessed.push(new Array(word.length).fill(''));
     }
 </script>
 
