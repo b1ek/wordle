@@ -62,20 +62,24 @@ export class V1 {
     // sssshhh.. dont tell anyone :p
     static aes256secret = 'skater_girl';
 
-    static async encode(word: string): Promise<object> {
+    static async encode(word: string): Promise<[ 1, string, string ]> {
         let scrambled = '';
         for (const letter of word) {
             scrambled += String.fromCharCode(random(32, 128)) + letter;
         }
 
         return [
+            1, // version
             (await sha256(Math.random().toString())).substring(0, 6),
             await bufferToBase64(await AES256.encodeStr(scrambled, this.aes256secret))
         ]
     }
 
-    static async decode(data: [string, string]): Promise<string> {
-        const encrypted = base64ToArrayBuffer(data[1]);
+    static async decode(data: [1, string, string]): Promise<string> {
+        if (data[0] !== 1) {
+            console.warn('Wrong algorithm version');
+        }
+        const encrypted = base64ToArrayBuffer(data[2]);
         const scrambled = await AES256.decodeToStr(encrypted, this.aes256secret);
         let unscrambled = '';
         for (let i = 0; i != scrambled.length; i++) {
