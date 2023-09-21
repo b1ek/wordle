@@ -81,7 +81,7 @@
             word.length > 3 && word.length < 11
         ) {
             not_a_word = true;
-            setTimeout(() => {not_a_word = false}, 1000);
+            setTimeout(() => {not_a_word = false}, 500);
             return updateState();
         }
 
@@ -170,7 +170,6 @@
     document.onkeydown = e => {
         if (game_creator) return updateState();
         if (endgame) return updateState();
-        if (not_a_word) return updateState();
 
         if (e.key == 'Backspace') {
             if (word_position == 0) return updateState();
